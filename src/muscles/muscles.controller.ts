@@ -1,9 +1,13 @@
 import { ForbiddenException } from "@/app/exceptions/forbidden.exception";
+import { Roles } from "@/decorators/roles.decorator";
 import { HttpExceptionFilter } from "@/filters/http-exception.filter";
 import { CreateMuscleDto } from "@/muscles/dto/create-muscle.dto";
 import { MuscleService } from "@/muscles/muscles.service";
 import { CustomPipe } from "@/pipes/custom.pipe";
-import { Body, Controller, Get, Header, HostParam, HttpCode, Param, ParseIntPipe, Post, Query, Redirect, Req, UseFilters } from "@nestjs/common";
+import {
+  Body, Controller, Get, Header, HostParam, HttpCode, Param, ParseIntPipe, Post, Query, Redirect, Req
+  , UseFilters
+} from "@nestjs/common";
 import { Request } from "express";
 
 const muscles = ['chest', 'back', 'biceps', 'triceps', 'shoulders', 'abs', 'legs', 'lower back'];
@@ -21,6 +25,12 @@ export class MusclesController {
   @Redirect('https://google.com', 302)
   redirect() {
     console.log('You were redirected.');
+  }
+
+  @Get('guard')
+  @Roles('admin')
+  getGuard() {
+    return 'Access granted for this route';
   }
 
   @Get('filter')
