@@ -1,4 +1,4 @@
-import { Controller, Get, Header, HttpCode, Post, Redirect, Req } from "@nestjs/common";
+import { Controller, Get, Header, HttpCode, Param, Post, Redirect, Req } from "@nestjs/common";
 import { Request } from "express";
 
 const muscles = ['chest', 'back', 'biceps', 'triceps', 'shoulders', 'abs', 'legs', 'lower back'];
@@ -11,6 +11,11 @@ export class Muscles {
     console.log({ url: request.url });
 
     return muscles;
+  }
+
+  @Get(':name')
+  findIndex(@Param('name') name: string) {
+    return muscles.indexOf(name);
   }
 
   @Post()
