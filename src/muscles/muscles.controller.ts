@@ -1,4 +1,5 @@
-import { Controller, Get, Header, HostParam, HttpCode, Param, Post, Redirect, Req } from "@nestjs/common";
+import { CreateMuscleDto } from "@/muscles/create-muscle.dto";
+import { Body, Controller, Get, Header, HostParam, HttpCode, Param, Post, Redirect, Req } from "@nestjs/common";
 import { Request } from "express";
 
 const muscles = ['chest', 'back', 'biceps', 'triceps', 'shoulders', 'abs', 'legs', 'lower back'];
@@ -21,8 +22,8 @@ export class Muscles {
   @Post()
   @HttpCode(204)
   @Header('Cache-Control', 'none')
-  create(): string[] {
-    console.log('We are inserting specified muscle in our DB');
+  create(@Body() createMuscleDto: CreateMuscleDto): string[] {
+    console.log('We are inserting specified muscle in our DB', createMuscleDto);
 
     return muscles;
   }
