@@ -1,3 +1,4 @@
+import { CreateMuscleDto } from "@/muscles/dto/create-muscle.dto";
 import { Muscle } from "@/muscles/interfaces/muscle.interface";
 import { Injectable } from "@nestjs/common";
 
@@ -5,8 +6,8 @@ import { Injectable } from "@nestjs/common";
 export class MuscleService {
   private readonly muscles: Muscle[] = [];
 
-  create(muscle: Muscle) {
-    this.muscles.push(muscle);
+  create(muscleDto: CreateMuscleDto) {
+    this.muscles.push(muscleDto);
   }
 
   findAll() {
