@@ -11,6 +11,7 @@ import {
 } from "@nestjs/common";
 import { Request } from "express";
 import { TimeoutInterceptor } from "@/interceptors/timeout.interceptor";
+import { LoggingInterceptor } from "@/interceptors/logging.interceptor";
 
 const muscles = ['chest', 'back', 'biceps', 'triceps', 'shoulders', 'abs', 'legs', 'lower back'];
 
@@ -24,7 +25,7 @@ export class MusclesController {
   }
 
   @Get('timeout-interceptor')
-  @UseInterceptors(TimeoutInterceptor)
+  @UseInterceptors(LoggingInterceptor, TimeoutInterceptor)
   async getTimeout() {
     return new Promise(resolve => { setTimeout(resolve, 8000); });
   }
