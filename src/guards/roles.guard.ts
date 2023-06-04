@@ -23,6 +23,9 @@ export class RolesGuard implements CanActivate {
       const hardCodedUser = { name: request.query?.name, roles: ['ultra', 'admin'] };
       request.user = hardCodedUser;
     }
+    else {
+      return false;
+    }
 
     const user = request.user;
 

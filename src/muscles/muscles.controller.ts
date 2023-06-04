@@ -12,6 +12,7 @@ import {
 import { Request } from "express";
 import { TimeoutInterceptor } from "@/interceptors/timeout.interceptor";
 import { LoggingInterceptor } from "@/interceptors/logging.interceptor";
+import { CustomAuth } from "@/decorators/custom-auth.decorator";
 
 const muscles = ['chest', 'back', 'biceps', 'triceps', 'shoulders', 'abs', 'legs', 'lower back'];
 
@@ -22,6 +23,12 @@ export class MusclesController {
   @Get()
   findAll(@Req() request: Request) {
     return this.musclesService.findAll();
+  }
+
+  @Get('custom-auth')
+  @CustomAuth('ultra')
+  customAuth(@Req() request: Request) {
+    return 'Done this too.';
   }
 
   @Get('timeout-interceptor')
