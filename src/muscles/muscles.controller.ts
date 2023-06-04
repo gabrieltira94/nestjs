@@ -2,6 +2,7 @@ import { ForbiddenException } from "@/app/exceptions/forbidden.exception";
 import { HttpExceptionFilter } from "@/filters/http-exception.filter";
 import { CreateMuscleDto } from "@/muscles/dto/create-muscle.dto";
 import { MuscleService } from "@/muscles/muscles.service";
+import { CustomPipe } from "@/pipes/custom.pipe";
 import { Body, Controller, Get, Header, HostParam, HttpCode, Param, ParseIntPipe, Post, Query, Redirect, Req, UseFilters } from "@nestjs/common";
 import { Request } from "express";
 
@@ -34,6 +35,11 @@ export class MusclesController {
    */
   @Get('pipe')
   getPipe(@Query('pipe', ParseIntPipe) pipe: number) {
+    return pipe;
+  }
+
+  @Get('custom-pipe')
+  getCustomPipe(@Query('pipe', CustomPipe) pipe: number) {
     return pipe;
   }
 
