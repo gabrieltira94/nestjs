@@ -1,7 +1,8 @@
 import { MusclesController } from "@/muscles/muscles.controller";
 import { MuscleService } from "@/muscles/muscles.service";
-import { Module } from "@nestjs/common";
+import { Global, Module } from "@nestjs/common";
 
+@Global()
 @Module({
   controllers: [MusclesController],
   providers: [MuscleService],
