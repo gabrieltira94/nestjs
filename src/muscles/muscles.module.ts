@@ -4,6 +4,7 @@ import { Module } from "@nestjs/common";
 
 @Module({
   controllers: [MusclesController],
-  providers: [MuscleService]
+  providers: [MuscleService],
+  exports: [MuscleService]
 })
 export class MusclesModule { }
