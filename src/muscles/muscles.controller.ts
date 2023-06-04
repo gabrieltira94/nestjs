@@ -1,6 +1,7 @@
+import { ForbiddenException } from "@/app/exceptions/forbidden.exception";
 import { CreateMuscleDto } from "@/muscles/dto/create-muscle.dto";
 import { MuscleService } from "@/muscles/muscles.service";
-import { Body, Controller, Get, Header, HostParam, HttpCode, Param, Post, Redirect, Req } from "@nestjs/common";
+import { Body, Controller, Get, Header, HostParam, HttpCode, Param, Post, Redirect, Req, UseFilters } from "@nestjs/common";
 import { Request } from "express";
 
 const muscles = ['chest', 'back', 'biceps', 'triceps', 'shoulders', 'abs', 'legs', 'lower back'];
@@ -20,6 +21,16 @@ export class MusclesController {
     console.log('You were redirected.');
   }
 
+  @Get('filter')
+  async filter() {
+    throw new ForbiddenException();
+  }
+
+  @Get('info')
+  getInfo(@HostParam('account') account: string) {
+    return account;
+  }
+
   @Get(':name')
   async findIndex(@Param('name') name: string): Promise<number> {
     return muscles.indexOf(name);
@@ -30,12 +41,5 @@ export class MusclesController {
   @Header('Cache-Control', 'none')
   create(@Body() createMuscleDto: CreateMuscleDto) {
     this.musclesService.create(createMuscleDto);
-  }
-
-
-
-  @Get('info')
-  getInfo(@HostParam('account') account: string) {
-    return account;
   }
 }
