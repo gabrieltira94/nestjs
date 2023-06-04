@@ -14,7 +14,7 @@ export class Muscles {
   }
 
   @Get(':name')
-  findIndex(@Param('name') name: string) {
+  async findIndex(@Param('name') name: string): Promise<number> {
     return muscles.indexOf(name);
   }
 
