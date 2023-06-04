@@ -2,7 +2,7 @@ import { ForbiddenException } from "@/app/exceptions/forbidden.exception";
 import { HttpExceptionFilter } from "@/filters/http-exception.filter";
 import { CreateMuscleDto } from "@/muscles/dto/create-muscle.dto";
 import { MuscleService } from "@/muscles/muscles.service";
-import { Body, Controller, Get, Header, HostParam, HttpCode, Param, Post, Redirect, Req, UseFilters } from "@nestjs/common";
+import { Body, Controller, Get, Header, HostParam, HttpCode, Param, ParseIntPipe, Post, Query, Redirect, Req, UseFilters } from "@nestjs/common";
 import { Request } from "express";
 
 const muscles = ['chest', 'back', 'biceps', 'triceps', 'shoulders', 'abs', 'legs', 'lower back'];
@@ -16,7 +16,7 @@ export class MusclesController {
     return this.musclesService.findAll();
   }
 
-  @Get('/redirect')
+  @Get('redirect')
   @Redirect('https://google.com', 302)
   redirect() {
     console.log('You were redirected.');
@@ -26,6 +26,15 @@ export class MusclesController {
   @UseFilters(HttpExceptionFilter)
   async filter() {
     throw new ForbiddenException();
+  }
+
+  /**
+   * Use case: http://localhost:3001/muscles/pipe?pipe=muscle
+   * @param pipe To work, should be a number or numeric string
+   */
+  @Get('pipe')
+  getPipe(@Query('pipe', ParseIntPipe) pipe: number) {
+    return pipe;
   }
 
   @Get('info')
