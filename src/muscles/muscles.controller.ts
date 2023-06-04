@@ -11,9 +11,13 @@ export class MusclesController {
 
   @Get()
   findAll(@Req() request: Request) {
-    console.log({ url: request.url });
-
     return this.musclesService.findAll();
+  }
+
+  @Get('/redirect')
+  @Redirect('https://google.com', 302)
+  redirect() {
+    console.log('You were redirected.');
   }
 
   @Get(':name')
@@ -28,11 +32,7 @@ export class MusclesController {
     this.musclesService.create(createMuscleDto);
   }
 
-  @Get('redirect')
-  @Redirect('https://google.com', 302)
-  redirect() {
-    console.log('You were redirected.');
-  }
+
 
   @Get('info')
   getInfo(@HostParam('account') account: string) {
