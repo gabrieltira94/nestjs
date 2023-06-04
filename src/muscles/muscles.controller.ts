@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Req } from "@nestjs/common";
+import { Controller, Get, HttpCode, Post, Req } from "@nestjs/common";
 import { Request } from "express";
 
 const muscles = ['chest', 'back', 'biceps', 'triceps', 'shoulders', 'abs', 'legs', 'lower back'];
@@ -14,6 +14,7 @@ export class Muscles {
   }
 
   @Post()
+  @HttpCode(204)
   create(): string[] {
     console.log('We are inserting specified muscle in our DB');
 
