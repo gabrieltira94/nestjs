@@ -1,4 +1,5 @@
-import { CreateMuscleDto } from "@/muscles/create-muscle.dto";
+import { CreateMuscleDto } from "@/muscles/dto/create-muscle.dto";
+import { MuscleService } from "@/muscles/muscles.service";
 import { Body, Controller, Get, Header, HostParam, HttpCode, Param, Post, Redirect, Req } from "@nestjs/common";
 import { Request } from "express";
 
@@ -6,6 +7,7 @@ const muscles = ['chest', 'back', 'biceps', 'triceps', 'shoulders', 'abs', 'legs
 
 @Controller({ path: 'muscles' })
 export class MusclesController {
+  constructor(private musclesService: MuscleService) { }
 
   @Get()
   findAll(@Req() request: Request): string[] {
@@ -22,10 +24,8 @@ export class MusclesController {
   @Post()
   @HttpCode(204)
   @Header('Cache-Control', 'none')
-  create(@Body() createMuscleDto: CreateMuscleDto): string[] {
-    console.log('We are inserting specified muscle in our DB', createMuscleDto);
-
-    return muscles;
+  create(@Body() createMuscleDto: CreateMuscleDto) {
+    this.musclesService.create(createMuscleDto);
   }
 
   @Get('redirect')
