@@ -1,4 +1,5 @@
 import { ForbiddenException } from "@/app/exceptions/forbidden.exception";
+import { HttpExceptionFilter } from "@/filters/http-exception.filter";
 import { CreateMuscleDto } from "@/muscles/dto/create-muscle.dto";
 import { MuscleService } from "@/muscles/muscles.service";
 import { Body, Controller, Get, Header, HostParam, HttpCode, Param, Post, Redirect, Req, UseFilters } from "@nestjs/common";
@@ -22,6 +23,7 @@ export class MusclesController {
   }
 
   @Get('filter')
+  @UseFilters(HttpExceptionFilter)
   async filter() {
     throw new ForbiddenException();
   }
