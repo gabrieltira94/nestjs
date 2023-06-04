@@ -4,8 +4,8 @@ import { Request } from "express";
 
 const muscles = ['chest', 'back', 'biceps', 'triceps', 'shoulders', 'abs', 'legs', 'lower back'];
 
-@Controller({ path: 'muscles', host: 'localhost:3000' })
-export class Muscles {
+@Controller({ path: 'muscles' })
+export class MusclesController {
 
   @Get()
   findAll(@Req() request: Request): string[] {
@@ -34,7 +34,7 @@ export class Muscles {
     console.log('You were redirected.');
   }
 
-  @Get()
+  @Get('info')
   getInfo(@HostParam('account') account: string) {
     return account;
   }
