@@ -1,9 +1,9 @@
-import { Controller, Get, Header, HttpCode, Param, Post, Redirect, Req } from "@nestjs/common";
+import { Controller, Get, Header, HostParam, HttpCode, Param, Post, Redirect, Req } from "@nestjs/common";
 import { Request } from "express";
 
 const muscles = ['chest', 'back', 'biceps', 'triceps', 'shoulders', 'abs', 'legs', 'lower back'];
 
-@Controller('muscles')
+@Controller({ path: 'muscles', host: 'localhost:3000' })
 export class Muscles {
 
   @Get()
@@ -31,5 +31,10 @@ export class Muscles {
   @Redirect('https://google.com', 302)
   redirect() {
     console.log('You were redirected.');
+  }
+
+  @Get()
+  getInfo(@HostParam('account') account: string) {
+    return account;
   }
 }
