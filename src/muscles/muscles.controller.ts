@@ -1,4 +1,4 @@
-import { ForbiddenException } from "@/app/exceptions/forbidden.exception";
+import { ForbiddenException } from "@/exceptions/forbidden.exception";
 import { Roles } from "@/decorators/roles.decorator";
 import { HttpExceptionFilter } from "@/filters/http-exception.filter";
 import { CreateMuscleDto } from "@/muscles/dto/create-muscle.dto";
@@ -6,9 +6,11 @@ import { MuscleService } from "@/muscles/muscles.service";
 import { CustomPipe } from "@/pipes/custom.pipe";
 import {
   Body, Controller, Get, Header, HostParam, HttpCode, Param, ParseIntPipe, Post, Query, Redirect, Req
-  , UseFilters
+  , UseFilters,
+  UseInterceptors
 } from "@nestjs/common";
 import { Request } from "express";
+import { TimeoutInterceptor } from "@/interceptors/timeout.interceptor";
 
 const muscles = ['chest', 'back', 'biceps', 'triceps', 'shoulders', 'abs', 'legs', 'lower back'];
 
@@ -19,6 +21,12 @@ export class MusclesController {
   @Get()
   findAll(@Req() request: Request) {
     return this.musclesService.findAll();
+  }
+
+  @Get('timeout-interceptor')
+  @UseInterceptors(TimeoutInterceptor)
+  async getTimeout() {
+    return new Promise(resolve => { setTimeout(resolve, 8000); });
   }
 
   @Get('redirect')
