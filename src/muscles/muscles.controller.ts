@@ -10,10 +10,10 @@ export class MusclesController {
   constructor(private musclesService: MuscleService) { }
 
   @Get()
-  findAll(@Req() request: Request): string[] {
+  findAll(@Req() request: Request) {
     console.log({ url: request.url });
 
-    return muscles;
+    return this.musclesService.findAll();
   }
 
   @Get(':name')
